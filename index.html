@@ -540,10 +540,10 @@
 
       <!-- Step 7: 個人資料 -->
       <div class="step-card" data-step="7">
-        <div class="q-title">🎉 完成測驗！請填寫資料領取分析報告</div>
+        <div class="q-title">🎉完成測驗！請填寫資料以取得診斷結果</div>
         <div class="user-info-group">
           <label for="userName">姓名 / 暱稱 *</label>
-          <input type="text" id="userName" placeholder="請輸入您的稱呼">
+          <input type="text" id="userName" placeholder="請輸入您的姓名 / 暱稱">
         </div>
         <div class="user-info-group">
           <label for="userEmail">電子郵件 Email *</label>
@@ -613,7 +613,7 @@
       <a href="https://www.edetw.com/esimplex/?utm_source=esimplexsurvey&utm_medium=overthinking&utm_campaign=result" target="_blank">
         e秒簽 (eSimplex)
       </a>
-      是專為中小型企業設計的智慧管理工具，結合 BPM 電子表單流程管理、EIP 資訊入口、DMS 文件管理，提供簡約、友善、隨時隨地不受限的操作介面。涵蓋彈性簽核流程、客製化電子表單、文件管理、公告、問卷、行動打卡等實用功能，系統採高標準資安防護，全面減輕人力負擔、提升管理效益，不僅是許多企業主信賴管理工具，更是企業邁向數位轉型與高效率維運的最佳選擇。
+      是專為中小型企業設計的智慧管理工具，結合EIP 資訊入口、BPM 電子表單流程管理、DMS 文件中心模組，功能涵蓋自訂電子表單、行事曆、公告、問卷、打卡、文件管理、行動APP等。採高標準資安防護，絕對是企業邁向數位轉型的最佳選擇。
     </p>
 
     <!-- 產品介紹下方的 Logo 圖 -->
@@ -815,13 +815,13 @@
     let effText = '';
     if (totalEfficiency <= 7) {
       effLevelKey = 'low';
-      effText = '🐢 佛系效率｜不是不做，只是事情到了你手上，總要繞一點路。';
+      effText = '🟢 佛系效率｜不是不做，只是事情到了你手上，總要繞一點路。';
     } else if (totalEfficiency <= 13) {
       effLevelKey = 'mid';
-      effText = '🐿️ 中效率｜不是沒效率，而是會花很多時間在「怎麼把事情做好」。';
+      effText = '🟡 中效率｜不是沒效率，而是會花很多時間在「怎麼把事情做好」。';
     } else {
       effLevelKey = 'high';
-      effText = '🐇 高效率｜能少走一步，就絕對不繞路。工作關鍵字：快、準、狠。';
+      effText = '🔴 高效率｜能少走一步，就絕對不繞路。工作關鍵字：快、準、狠。';
     }
 
     const key = `${burnLevelKey}_${effLevelKey}`;
