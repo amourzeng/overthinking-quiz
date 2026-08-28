@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【職場心理測驗】1分鐘解鎖你的職場代表動物！</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- 引入截圖套件 HTML2Canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #7c3aed;
+      --primary-hover: #6d28d9;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-main: #1f2937;
+      --text-sub: #4b5563;
+      --border-color: #e5e7eb;
+      --good-color: #059669;
+      --good-bg: #ecfdf5;
+      --bad-color: #dc2626;
+      --bad-bg: #fef2f2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    body {
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      transition: background-image 0.6s ease-in-out;
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 15px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 12px;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      color: var(--primary-color);
+      margin-bottom: 3px;
+    }
+
+    .header p {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
+
+    .progress-container {
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-bg {
+      background-color: rgba(255, 255, 255, 0.4);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background-color: var(--primary-color);
+      height: 100%;
+      width: 16.6%;
+      transition: width 0.3s ease;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px 24px 20px 24px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .step-card {
+      display: none;
+    }
+
+    .step-card.active {
+      display: block;
+      animation: fadeIn 0.35s ease-in-out;
+    }
+
+    .q-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+      background-color: #ffffff;
+    }
+
+    .option-label:hover {
+      border-color: var(--primary-color);
+      background-color: #f5f3ff;
+    }
+
+    .option-label input[type="radio"] {
+      margin-right: 12px;
+      accent-color: var(--primary-color);
+      width: 18px;
+      height: 18px;
+    }
+
+    .option-label.selected {
+      border-color: var(--primary-color);
+      background-color: #f3e8ff;
+      font-weight: 700;
+    }
+
+    .nav-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      visibility: hidden;
+    }
+
+    .btn-back:hover {
+      background: #ffffff;
+    }
+
+    .user-info-group {
+      margin-bottom: 16px;
+    }
+
+    .user-info-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .user-info-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .user-info-group input:focus {
+      border-color: var(--primary-color);
+    }
+
+    /* 個資同意條款樣式 */
+    .privacy-consent-group {
+      margin-top: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .privacy-consent-group input[type="checkbox"] {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary-color);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .privacy-consent-group label {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .btn-submit:hover {
+      background: var(--primary-hover);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .result-card {
+      text-align: center;
+      padding-top: 28px;
+    }
+
+    .animal-badge {
+      font-size: 4rem;
+      margin: 10px 0 5px 0;
+    }
+
+    .result-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+    }
+
+    .os-box {
+      background: #f3e8ff;
+      color: #6b21a8;
+      padding: 10px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .score-box {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      text-align: left;
+      border-left: 5px solid var(--primary-color);
+    }
+
+    .score-box.burnout {
+      border-left-color: #f59e0b;
+    }
+
+    .score-box h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .score-box p {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+    }
+
+    .teammates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .teammate-card {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .teammate-card.good {
+      background-color: var(--good-bg);
+      border-color: #a7f3d0;
+    }
+
+    .teammate-card.bad {
+      background-color: var(--bad-bg);
+      border-color: #fca5a5;
+    }
+
+    .teammate-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .teammate-card.good .teammate-tag {
+      color: var(--good-color);
+    }
+
+    .teammate-card.bad .teammate-tag {
+      color: var(--bad-color);
+    }
+
+    .teammate-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    /* 診斷報告底部產品介紹樣式 */
+    .result-product-intro {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-align: left;
+      line-height: 1.6;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      padding: 0 5px;
+    }
+
+    .result-product-intro a {
+      color: var(--primary-color);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    /* 診斷頁面產品介紹下的 Logo 樣式 */
+    .result-logo {
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+
+    .result-logo img {
+      max-height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      background: #e5e7eb;
+      color: var(--text-main);
+    }
+
+    .btn-action:hover {
+      background: #d1d5db;
+    }
+
+    /* 測驗頁面底部 Logo */
+    .card-footer-logo {
+      margin-top: 15px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-footer-logo img {
+      max-height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 480px) {
+      .teammates-grid {
+        grid-template-columns: 1fr;
+      }
+      .result-actions {
+        flex-direction: column;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 測驗頂部 Banner 區塊 -->
+  <div class="header hidden" id="quizHeader">
+    <h1>【職場心理測驗】</h1>
+    <p>1分鐘測出你的職場代表動物 + 內耗指數！</p>
+  </div>
+
+  <div class="progress-container hidden" id="progressContainer">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+  </div>
+
+  <!-- 測驗卡片容器 -->
+  <div class="card" id="quizCard">
+    <form id="quizForm">
+
+      <!-- Step 0: 封面頁 -->
+      <div class="step-card active" data-step="0">
+        <div style="text-align: center; padding: 0;">
+          <div style="font-size: 3.5rem; margin-bottom: 12px;">🐿️</div>
+          <h1 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin-bottom: 6px;">
+            【職場心理測驗】
+          </h1>
+          <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin-bottom: 16px;">
+            1分鐘解鎖你的職場代表動物！
+          </h2>
+          
+          <div style="font-size: 0.95rem; color: #000000; line-height: 1.8; margin-bottom: 18px;">
+            <p style="font-weight: 400;">鬧鐘響起的那刻，你的職場人格就已上線囉</p>
+            <p style="font-weight: 400;">從起床、打卡、工作一路到下班</p>
+            <p style="font-weight: 400;">看看工作日的你究竟是哪一派&amp; 工作心累真相！</p>
+          </div>
+          
+          <button type="button" class="btn-submit" id="btnStart">展開職場一日</button>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="step-card" data-step="1">
+        <div class="q-title">Q1. 今天是週五，軟綿綿的床像是有磁力一樣…你的第一反應是？</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q1" value="2,3"><span>A. 絕對不賴床，秒切「上班戰鬥模式」！</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="6,1"><span>B. 先在床上進行 5-10 分鐘的「人生意義探討」。</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="4,2"><span>C. 嘴角不自覺上揚，心裡開始規劃今晚要去哪渡過小周末。</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="0,2"><span>D. 像個「無情機器人」一樣，起床、刷牙、準備出門。</span></label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="step-card" data-step="2">
+        <div class="q-title">Q2. 08:59 AM 壓線抵達公司，你與打卡機的距離是…</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q2" value="3,1"><span>A. 【極限衝刺】最後 5 秒以滑壘姿態按下「打卡鐘」。</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="2,0"><span>B. 【人海排隊】卡在門禁卡機前，看著前面排隊人潮心裡默默倒數。</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="0,3"><span>C. 【優雅彈指】走進公司範圍，手機輕輕一點打卡完成。</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="0,2"><span>D. 【自由靈魂】我登場的地方就是辦公室。</span></label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="step-card" data-step="3">
+        <div class="q-title">Q3. 09:30 AM 邊收信件，邊喝續命黑咖啡，突然跳出一則訊息！</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q3" value="0,3"><span>A. 【民以食為天】公司 APP 推播：「午餐調查：極品滷肉飯」</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="1,1"><span>B. 【社牛揪團】LINE 群組跳出：「有人要一起叫外送嗎？」</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="3,1"><span>C. 【消化不良】主管私訊：「中午一起去食堂吃飯，順便討論下 KPI。」</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="2,0"><span>D. 【與世隔絕】假裝沒看到，繼續沉浸在自己的小世界.</span></label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="step-card" data-step="4">
+        <div class="q-title">Q4. 14:00 PM 午休結束。這時主管丟來一個爛攤子，你會…</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q4" value="0,0"><span>A. 【假裝沒看到】先喝口水、帶薪拉屎，說不定事情晚點就自己解決。</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="3,1"><span>B. 【人肉搜尋法】逐一向同事問：「姐，那份 2010 年檔案你還有留嗎？」</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="1,2"><span>C. 【求雲端授權】跟主管取得雲端資料庫授權，所有資料任我看。</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="0,3"><span>D. 【精準獵人】登入文件中心，輸入關鍵字抓出所需資料。</span></label>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="step-card" data-step="5">
+        <div class="q-title">Q5. 16:30 PM 窗外狂風暴雨，公司發布緊急通知：「因應 有夠派颱風 來襲，及保障同仁安全，明日開放居家上班！」</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q5" value="3,1"><span>A. 【布告欄】上廁所路上，看到大家圍在布告欄討論。</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="2,1"><span>B. 【口耳相傳】隔壁同事興奮拍你肩膀：「聽說明天居家上班耶！」</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="0,3"><span>C. 【系統推播】手機收到公告推播，開始謀劃工作該怎麼辦。</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="3,0"><span>D. 【再度邊緣】蛤？我不知道耶！什麼時候說的？</span></label>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="step-card" data-step="6">
+        <div class="q-title">Q6. 17:55 PM 總算是撐到這時候了，你的下班儀式感是…</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q6" value="3,4"><span>A. 【時間追逐戰】今日事今日畢，抱著文件夾跑完所有簽核。</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="3,2"><span>B. 【狂洗訊息】在 LINE 群組狂@主管：「再麻煩處理！」</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="1,6"><span>C. 【上帝視角】上簽核系統速速跟跟單據進度。</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="3,0"><span>D. 【無奈加班】眼看約會快要遲到，還是在座位上靜靜等待主管回覆。</span></label>
+        </div>
+      </div>
+
+      <!-- Step 7: 個人資料 -->
+      <div class="step-card" data-step="7">
+        <div class="q-title">🎉 完成測驗！請填寫資料領取分析報告</div>
+        <div class="user-info-group">
+          <label for="userName">姓名 / 暱稱 *</label>
+          <input type="text" id="userName" placeholder="請輸入您的稱呼">
+        </div>
+        <div class="user-info-group">
+          <label for="userEmail">電子郵件 Email *</label>
+          <input type="email" id="userEmail" placeholder="example@email.com">
+        </div>
+
+        <!-- 個資條款勾選框區塊 -->
+        <div class="privacy-consent-group">
+          <input type="checkbox" id="privacyConsent">
+          <label for="privacyConsent">
+            我同意提供上述個人資料，並了解這些資訊將僅用於相關行銷服務之聯繫。我確認已閱讀並接受個人資料蒐集、處理及利用之相關規範，且有權隨時要求查閱、修正或刪除我的個資。
+          </label>
+        </div>
+
+        <button type="button" class="btn-submit" id="btnSubmit">解鎖我的職場代表動物</button>
+      </div>
+
+    </form>
+
+    <div class="nav-actions hidden" id="navActions">
+      <button type="button" class="btn-back" id="btnBack">← 上一題</button>
+    </div>
+
+    <!-- 僅在測驗進行時顯示的底部 Logo -->
+    <div class="card-footer-logo">
+      <img src="https://www.edetw.com/wp-content/uploads/logo-e.png" alt="E-Direct Logo">
+    </div>
+  </div>
+
+  <!-- 診斷報告頁面 -->
+  <div id="resultContainer" class="card result-card hidden">
+
+    <div style="font-size: 1rem; color: var(--text-sub); margin-bottom: 5px;">Hi, <span id="resName"></span>！你的職場診斷結果：</div>
+    <div class="animal-badge" id="resIcon">🦫</div>
+    <div class="result-title" id="resAnimal">職場代表動物</div>
+    <div class="os-box" id="resOS">職場OS：……</div>
+
+    <div class="score-box burnout">
+      <h3><span>🔥 工作內耗指數</span><span id="resBurnScore">0/21</span></h3>
+      <p id="resBurnDesc"></p>
+    </div>
+
+    <div class="score-box">
+      <h3><span>⚡ 工作效率指數</span><span id="resEffScore">0/21</span></h3>
+      <p id="resEffDesc"></p>
+    </div>
+
+    <div class="teammates-grid">
+      <div class="teammate-card good">
+        <div class="teammate-tag">🟢 工作神隊友</div>
+        <div class="teammate-info">
+          <span id="goodIcon">🦫</span>
+          <span id="goodName">鬆弛感水豚</span>
+        </div>
+      </div>
+      <div class="teammate-card bad">
+        <div class="teammate-tag">🔴 職場雷隊友</div>
+        <div class="teammate-info">
+          <span id="badIcon">🐜</span>
+          <span id="badName">暴走螞蟻</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 產品介紹文字 -->
+    <p class="result-product-intro">
+      <a href="https://www.edetw.com/esimplex/?utm_source=esimplexsurvey&utm_medium=overthinking&utm_campaign=result" target="_blank">
+        e秒簽 (eSimplex)
+      </a>
+      是專為中小型企業設計的智慧管理工具，結合 BPM 電子表單流程管理、EIP 資訊入口、DMS 文件管理，提供簡約、友善、隨時隨地不受限的操作介面。涵蓋彈性簽核流程、客製化電子表單、文件管理、公告、問卷、行動打卡等實用功能，系統採高標準資安防護，全面減輕人力負擔、提升管理效益，不僅是許多企業主信賴管理工具，更是企業邁向數位轉型與高效率維運的最佳選擇。
+    </p>
+
+    <!-- 產品介紹下方的 Logo 圖 -->
+    <div class="result-logo">
+      <img src="https://www.edetw.com/wp-content/uploads/logo-e.png" alt="E-Direct Logo">
+    </div>
+
+    <!-- 底部按鈕組 -->
+    <div class="result-actions" id="resultActions">
+      <button type="button" class="btn-action" id="btnDownload">📸 下載報告圖片</button>
+      <button type="button" class="btn-action" onclick="location.reload()">🔄 重新測驗</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  let currentStep = 0;
+  const totalQuestions = 6;
+  const stepCards = document.querySelectorAll('.step-card');
+  const progressBar = document.getElementById('progressBar');
+  const btnBack = document.getElementById('btnBack');
+  const quizHeader = document.getElementById('quizHeader');
+  const progressContainer = document.getElementById('progressContainer');
+  const navActions = document.getElementById('navActions');
+  const quizCard = document.getElementById('quizCard');
+
+  const bgImages = {
+    0: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80')",
+    1: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80')",
+    2: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=1200&q=80')",
+    3: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80')",
+    4: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80')",
+    5: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=1200&q=80')",
+    6: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80')",
+    7: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80')",
+    result: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80')"
+  };
+
+  const animalMatrix = {
+    'low_low': {
+      name: '鬆弛感水豚', icon: '🦫',
+      os: '「事情總會有辦法，先喝杯咖啡再說。」',
+      good: { name: '鬆弛感水豚', icon: '🦫' },
+      bad: { name: '暴走螞蟻', icon: '🐜' }
+    },
+    'mid_low': {
+      name: '觀望樹懶', icon: '🦥',
+      os: '「先看看別人怎麼做好了……」',
+      good: { name: '內心戲蝸牛', icon: '🐌' },
+      bad: { name: '淡定兔子', icon: '🐇' }
+    },
+    'high_low': {
+      name: '內心戲蝸牛', icon: '🐌',
+      os: '「他剛剛那句話……是不是有其他意思？」',
+      good: { name: '觀望樹懶', icon: '🦥' },
+      bad: { name: '機靈狐狸', icon: '🦊' }
+    },
+    'low_mid': {
+      name: '隨和熊貓', icon: '🐼',
+      os: '「先做再說，船到橋頭自然直。」',
+      good: { name: '淡定兔子', icon: '🐇' },
+      bad: { name: '內心戲蝸牛', icon: '🐌' }
+    },
+    'mid_mid': {
+      name: '忙碌松鼠', icon: '🐿️',
+      os: '「明明一直在做，但怎麼還沒做完？」',
+      good: { name: '機靈狐狸', icon: '🦊' },
+      bad: { name: '戰鬥老鷹', icon: '🦅' }
+    },
+    'high_mid': {
+      name: '暴走螞蟻', icon: '🐜',
+      os: '「就快好了！等等……我再確認一次」',
+      good: { name: '戰鬥老鷹', icon: '🦅' },
+      bad: { name: '觀望樹懶', icon: '🦥' }
+    },
+    'low_high': {
+      name: '淡定兔子', icon: '🐇',
+      os: '「處理完了，趕緊下一件。」',
+      good: { name: '隨和熊貓', icon: '🐼' },
+      bad: { name: '鬆弛感水豚', icon: '🦫' }
+    },
+    'mid_high': {
+      name: '機靈狐狸', icon: '🦊',
+      os: '「這麼簡單的事情，為什麼要搞這麼複雜？」',
+      good: { name: '忙碌松鼠', icon: '🐿️' },
+      bad: { name: '暴走螞蟻', icon: '🐜' }
+    },
+    'high_high': {
+      name: '戰鬥老鷹', icon: '🦅',
+      os: '「初步弄好了，但我覺得還能更好。」',
+      good: { name: '暴走螞蟻', icon: '🦅' },
+      bad: { name: '隨和熊貓', icon: '🐼' }
+    }
+  };
+
+  function updateStep(step) {
+    document.body.style.backgroundImage = bgImages[step] || bgImages[0];
+
+    stepCards.forEach(card => {
+      if (parseInt(card.dataset.step) === step) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+
+    if (step === 0) {
+      quizHeader.classList.add('hidden');
+      progressContainer.classList.add('hidden');
+      navActions.classList.add('hidden');
+      btnBack.style.visibility = 'hidden';
+    } else if (step <= totalQuestions) {
+      quizHeader.classList.remove('hidden');
+      progressContainer.classList.remove('hidden');
+      navActions.classList.remove('hidden');
+      const pct = Math.round((step / totalQuestions) * 100);
+      progressBar.style.width = `${pct}%`;
+      btnBack.style.visibility = step > 1 ? 'visible' : 'hidden';
+    } else {
+      quizHeader.classList.remove('hidden');
+      progressContainer.classList.add('hidden');
+      navActions.classList.remove('hidden');
+      btnBack.style.visibility = 'visible';
+    }
+  }
+
+  updateStep(0);
+
+  document.getElementById('btnStart').addEventListener('click', () => {
+    currentStep = 1;
+    updateStep(currentStep);
+  });
+
+  document.querySelectorAll('.options input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const parentOptions = this.closest('.options');
+      parentOptions.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+      this.closest('.option-label').classList.add('selected');
+
+      setTimeout(() => {
+        if (currentStep <= totalQuestions) {
+          currentStep++;
+          updateStep(currentStep);
+        }
+      }, 250);
+    });
+  });
+
+  btnBack.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStep(currentStep);
+    }
+  });
+
+  document.getElementById('btnSubmit').addEventListener('click', function() {
+    const name = document.getElementById('userName').value.trim();
+    const email = document.getElementById('userEmail').value.trim();
+    const consent = document.getElementById('privacyConsent').checked;
+
+    if (!name || !email) {
+      alert('請填寫姓名與 Email 以查看報告！');
+      return;
+    }
+
+    if (!consent) {
+      alert('請勾選同意個人資料蒐集與利用規範！');
+      return;
+    }
+
+    let totalBurnout = 0;
+    let totalEfficiency = 0;
+
+    for (let i = 1; i <= totalQuestions; i++) {
+      const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selectedOption) {
+        const [burnout, efficiency] = selectedOption.value.split(',').map(Number);
+        totalBurnout += burnout;
+        totalEfficiency += efficiency;
+      }
+    }
+
+    let burnLevelKey = '';
+    let burnText = '';
+    if (totalBurnout <= 7) {
+      burnLevelKey = 'low';
+      burnText = '🟢 低內耗｜事情來了就處理，處理完就放下。不太會讓工作佔據你的腦袋！';
+    } else if (totalBurnout <= 13) {
+      burnLevelKey = 'mid';
+      burnText = '🟡 中內耗｜「容易想太多」事情本身不可怕，可怕的是你腦中已經演完八十集！';
+    } else {
+      burnLevelKey = 'high';
+      burnText = '🔴 超內耗｜「腦袋正在加班」人已經下班，但你的腦袋還在公司。注意！這種加班是沒加班費的！';
+    }
+
+    let effLevelKey = '';
+    let effText = '';
+    if (totalEfficiency <= 7) {
+      effLevelKey = 'low';
+      effText = '🐢 佛系效率｜不是不做，只是事情到了你手上，總要繞一點路。';
+    } else if (totalEfficiency <= 13) {
+      effLevelKey = 'mid';
+      effText = '🐿️ 中效率｜不是沒效率，而是會花很多時間在「怎麼把事情做好」。';
+    } else {
+      effLevelKey = 'high';
+      effText = '🐇 高效率｜能少走一步，就絕對不繞路。工作關鍵字：快、準、狠。';
+    }
+
+    const key = `${burnLevelKey}_${effLevelKey}`;
+    const animal = animalMatrix[key];
+
+    document.body.style.backgroundImage = bgImages['result'];
+
+    document.getElementById('resName').textContent = name;
+    document.getElementById('resIcon').textContent = animal.icon;
+    document.getElementById('resAnimal').textContent = animal.name;
+    document.getElementById('resOS').textContent = `職場OS：${animal.os}`;
+
+    document.getElementById('resBurnScore').textContent = `${totalBurnout} / 21`;
+    document.getElementById('resBurnDesc').textContent = burnText;
+
+    document.getElementById('resEffScore').textContent = `${totalEfficiency} / 21`;
+    document.getElementById('resEffDesc').textContent = effText;
+
+    document.getElementById('goodIcon').textContent = animal.good.icon;
+    document.getElementById('goodName').textContent = animal.good.name;
+
+    document.getElementById('badIcon').textContent = animal.bad.icon;
+    document.getElementById('badName').textContent = animal.bad.name;
+
+    // 提交測驗後，完整隱藏測驗卡片區塊
+    quizCard.classList.add('hidden');
+    quizHeader.classList.add('hidden');
+    progressContainer.classList.add('hidden');
+
+    // 顯示乾淨的診斷報告
+    document.getElementById('resultContainer').classList.remove('hidden');
+  });
+
+  // 按鈕功能：下載報告成圖片
+  document.getElementById('btnDownload').addEventListener('click', function() {
+    const resultCard = document.getElementById('resultContainer');
+    const actionsDiv = document.getElementById('resultActions');
+
+    actionsDiv.style.visibility = 'hidden';
+
+    html2canvas(resultCard, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    }).then(canvas => {
+      actionsDiv.style.visibility = 'visible';
+      
+      const link = document.createElement('a');
+      link.download = '職場心理測驗_診斷報告.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(err => {
+      actionsDiv.style.visibility = 'visible';
+      alert('下載圖片時發生錯誤，請稍後再試。');
+      console.error(err);
+    });
+  });
+</script>
+
+</body>
+</html>
