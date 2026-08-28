@@ -3,114 +3,143 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="快來測測你的職場代表動物與內耗指數！只需1分鐘，解鎖你的職場人格，看看你的工作神隊友與雷隊友是誰。">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Quiz",
-  "name": "【職場心理測驗】解鎖你的職場代表動物！",
-  "description": "測出你的職場代表動物與內耗指數！只需1分鐘解鎖職場人格。",
-  "provider": {
-    "@type": "Organization",
-    "name": "e秒簽 (eSimplex)",
-    "url": "https://www.edetw.com/esimplex/"
-  }
-}
-</script>
-
+  <meta name="description" content="快來測測你的職場代表動物與內耗指數！只需1分鐘，解鎖你的職場人格，獲得個人專屬職場通行證！">
   <title>【職場心理測驗】解鎖你的職場代表動物！</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 
-<meta property="og:title" content="【職場心理測驗】解鎖你的職場代表動物！">
-<meta property="og:description" content="測出你的職場代表動物與內耗指數！快來看看你的職場人格。">
+  <!-- Canonical & OG Tags -->
+  <link rel="canonical" href="https://www.edetw.com/esimplex/">
+  <meta property="og:title" content="【職場心理測驗】解鎖你的職場代表動物！">
+  <meta property="og:description" content="測出你的職場代表動物與內耗指數！快來看看你的職場人格通行證。">
+  <meta property="og:image" content="https://www.edetw.com/esimplex/images/quiz-og.jpg">
+  <meta property="og:url" content="https://www.edetw.com/esimplex/quiz/">
 
-  <!-- 引入截圖套件 HTML2Canvas -->
+  <!-- Google Fonts & JSON-LD -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Quiz",
+    "name": "【職場心理測驗】解鎖你的職場代表動物！",
+    "description": "測出你的職場代表動物與內耗指數！只需1分鐘解鎖職場人格。",
+    "provider": {
+      "@type": "Organization",
+      "name": "e秒簽 (eSimplex)",
+      "url": "https://www.edetw.com/esimplex/"
+    }
+  }
+  </script>
+
+  <!-- HTML2Canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     :root {
-      --primary-color: #7c3aed;
-      --primary-hover: #6d28d9;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --text-main: #1f2937;
-      --text-sub: #4b5563;
-      --border-color: #e5e7eb;
+      /* 科技藍 + 紫色漸層色規 */
+      --primary-blue: #2563eb;
+      --primary-purple: #7c3aed;
+      --brand-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      --brand-gradient-hover: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+      
+      /* 現代辦公室質感灰階 */
+      --bg-slate: #0f172a;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #94a3b8;
+      
+      /* 評估狀態色 */
       --good-color: #059669;
-      --good-bg: #ecfdf5;
+      --good-bg: #f0fdf4;
+      --good-border: #bbf7d0;
       --bad-color: #dc2626;
       --bad-bg: #fef2f2;
+      --bad-border: #fecaca;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Noto Sans TC', sans-serif;
+      font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     body {
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      transition: background-image 0.6s ease-in-out;
+      transition: background-image 0.5s ease;
       color: var(--text-main);
       line-height: 1.6;
-      padding: 20px 15px;
+      padding: 24px 16px;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: var(--bg-slate);
     }
 
     .container {
       width: 100%;
-      max-width: 600px;
+      max-width: 580px;
     }
 
+    /* 頂部系統列風格 Banner */
     .header {
       text-align: center;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 12px;
-      border-radius: 12px;
-      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.92);
+      padding: 16px 20px;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
     }
 
     .header h1 {
-      font-size: 1.4rem;
-      color: var(--primary-color);
-      margin-bottom: 3px;
+      font-size: 1.35rem;
+      font-weight: 900;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2px;
     }
 
     .header p {
       color: var(--text-sub);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 500;
     }
 
+    /* 科技感進度條 */
     .progress-container {
       margin-bottom: 20px;
     }
 
     .progress-bar-bg {
-      background-color: rgba(255, 255, 255, 0.4);
-      height: 8px;
-      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.3);
+      height: 10px;
+      border-radius: 6px;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
     }
 
     .progress-bar-fill {
-      background-color: var(--primary-color);
+      background: var(--brand-gradient);
       height: 100%;
       width: 16.6%;
-      transition: width 0.3s ease;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
     }
 
+    /* 主卡片容器 */
     .card {
       background: var(--card-bg);
-      border-radius: 16px;
-      padding: 28px 24px 20px 24px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 32px 26px 24px 26px;
+      box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.3), 0 0 0 1px var(--card-border);
+      backdrop-filter: blur(16px);
       position: relative;
     }
 
@@ -120,14 +149,15 @@
 
     .step-card.active {
       display: block;
-      animation: fadeIn 0.35s ease-in-out;
     }
+
 
     .q-title {
       font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       color: var(--text-main);
+      line-height: 1.5;
     }
 
     .options {
@@ -139,85 +169,98 @@
     .option-label {
       display: flex;
       align-items: center;
-      padding: 14px 16px;
-      border: 2px solid var(--border-color);
+      padding: 16px 18px;
+      border: 1.5px solid var(--card-border);
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.2s ease;
       font-size: 0.95rem;
       background-color: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
     }
 
     .option-label:hover {
-      border-color: var(--primary-color);
-      background-color: #f5f3ff;
+      border-color: var(--primary-blue);
+      background-color: #eff6ff;
+      transform: translateY(-1px);
     }
 
     .option-label input[type="radio"] {
-      margin-right: 12px;
-      accent-color: var(--primary-color);
+      margin-right: 14px;
+      accent-color: var(--primary-purple);
       width: 18px;
       height: 18px;
     }
 
     .option-label.selected {
-      border-color: var(--primary-color);
-      background-color: #f3e8ff;
+      border-color: var(--primary-purple);
+      background: #faf5ff;
       font-weight: 700;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
     }
 
     .nav-actions {
       display: flex;
       justify-content: space-between;
-      margin-top: 15px;
+      margin-top: 20px;
     }
 
     .btn-back {
-      background: rgba(255, 255, 255, 0.8);
-      border: none;
-      color: var(--text-main);
-      font-size: 0.9rem;
-      font-weight: 500;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      font-size: 0.88rem;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 8px 14px;
-      border-radius: 8px;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 10px;
       visibility: hidden;
+      transition: all 0.2s ease;
     }
 
     .btn-back:hover {
       background: #ffffff;
+      color: var(--text-main);
+      border-color: #cbd5e1;
     }
 
     .user-info-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      text-align: left;
     }
 
     .user-info-group label {
       display: block;
-      font-weight: 500;
-      margin-bottom: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
     }
 
     .user-info-group input {
       width: 100%;
-      padding: 12px 14px;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      font-size: 1rem;
+      padding: 14px 16px;
+      border: 1.5px solid var(--card-border);
+      border-radius: 10px;
+      font-size: 0.98rem;
       outline: none;
+      background: #f8fafc;
+      transition: all 0.2s ease;
     }
 
     .user-info-group input:focus {
-      border-color: var(--primary-color);
+      background: #ffffff;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
     }
 
-    /* 個資同意條款樣式 */
     .privacy-consent-group {
-      margin-top: 15px;
-      margin-bottom: 20px;
+      margin-top: 18px;
+      margin-bottom: 22px;
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -228,7 +271,7 @@
       margin-top: 3px;
       width: 18px;
       height: 18px;
-      accent-color: var(--primary-color);
+      accent-color: var(--primary-purple);
       cursor: pointer;
       flex-shrink: 0;
     }
@@ -236,66 +279,232 @@
     .privacy-consent-group label {
       font-size: 0.82rem;
       color: var(--text-sub);
-      line-height: 1.5;
+      line-height: 1.55;
       cursor: pointer;
     }
 
     .btn-submit {
       width: 100%;
-      background: var(--primary-color);
+      background: var(--brand-gradient);
       color: white;
       border: none;
       padding: 16px;
       border-radius: 12px;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 5px;
+      margin-top: 8px;
+      box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+      transition: all 0.2s ease;
     }
 
     .btn-submit:hover {
-      background: var(--primary-hover);
+      background: var(--brand-gradient-hover);
+      box-shadow: 0 12px 24px -5px rgba(124, 58, 237, 0.45);
+      transform: translateY(-1px);
     }
 
     .hidden {
       display: none !important;
     }
 
-    .result-card {
+    /* =========================================================
+       識別證樣式
+       ========================================================= */
+    .badge-wrapper {
+      position: relative;
+      padding-top: 38px;
+      margin-top: 10px;
+    }
+
+    /* 頂部織帶 (Lanyard) */
+    .lanyard-strap {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 46px;
+      height: 50px;
+      background: linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+      border-radius: 4px 4px 0 0;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .lanyard-clip {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28px;
+      height: 16px;
+      background: linear-gradient(180deg, #cbd5e1 0%, #64748b 100%);
+      border-radius: 4px;
+      z-index: 11;
+      border: 1px solid #94a3b8;
+    }
+
+    /* 識別證掛孔 */
+    .badge-hole {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 10px;
+      background: #0f172a;
+      border-radius: 10px;
+      z-index: 12;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+      border: 1.5px solid #cbd5e1;
+    }
+
+    /* 識別證卡片本體 */
+    .id-badge-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 24px;
+      padding: 28px 22px 20px 22px;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.4);
+      position: relative;
+      overflow: hidden;
       text-align: center;
-      padding-top: 28px;
     }
 
-    .animal-badge {
-      font-size: 4rem;
-      margin: 10px 0 5px 0;
+    /* 壓克力的斜向透明光澤 (Reflection Glare) */
+    .id-badge-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 40%);
+      pointer-events: none;
+      z-index: 5;
     }
 
-    .result-title {
-      font-size: 1.6rem;
+    /* 卡片頭部發卡單位與 IC 晶片 */
+    .id-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 2px dashed #e2e8f0;
+      margin-top: 8px;
+      margin-bottom: 18px;
+    }
+
+    .id-card-issuer {
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      color: var(--primary-blue);
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    .id-card-issuer span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.65rem;
       font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 8px;
     }
 
-    .os-box {
+    /* 金屬 IC 晶片圖示 */
+    .ic-chip {
+      width: 34px;
+      height: 26px;
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      border-radius: 6px;
+      border: 1px solid #b45309;
+      position: relative;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.6);
+    }
+
+    .ic-chip::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 1px;
+      background: #b45309;
+    }
+
+    /* 識別證大頭照區塊 */
+    .id-photo-frame {
+      width: 105px;
+      height: 105px;
+      margin: 0 auto 12px auto;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eff6ff 0%, #f3e8ff 100%);
+      border: 2.5px solid var(--primary-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.8rem;
+      box-shadow: 0 8px 16px -4px rgba(124, 58, 237, 0.2);
+    }
+
+    .id-user-name {
+      font-size: 0.95rem;
+      color: var(--text-sub);
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .id-animal-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      background: var(--brand-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .id-number {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    .os-box-badge {
       background: #f3e8ff;
       color: #6b21a8;
-      padding: 10px 16px;
-      border-radius: 20px;
-      display: inline-block;
-      font-weight: 500;
-      font-size: 0.95rem;
-      margin-bottom: 20px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 18px;
+      border: 1px solid #e9d5ff;
     }
 
+    /* 驗證油墨印章*/
+    .stamp-approved {
+      position: absolute;
+      top: 135px;
+      right: 18px;
+      border: 3px dashed #dc2626;
+      color: #dc2626;
+      font-weight: 900;
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transform: rotate(-14deg);
+      opacity: 0.85;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    /* 指數分析外圍面板 */
     .score-box {
-      background: #f9fafb;
+      background: #ffffff;
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
       text-align: left;
-      border-left: 5px solid var(--primary-color);
+      border: 1px solid var(--card-border);
+      border-left: 5px solid var(--primary-blue);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
 
     .score-box.burnout {
@@ -303,90 +512,103 @@
     }
 
     .score-box h3 {
-      font-size: 1rem;
-      margin-bottom: 6px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 4px;
       display: flex;
       justify-content: space-between;
+      color: var(--text-main);
     }
 
     .score-box p {
       color: var(--text-sub);
-      font-size: 0.9rem;
+      font-size: 0.82rem;
+      line-height: 1.5;
     }
 
+    /* 神/雷隊友網格 */
     .teammates-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 16px;
-      margin-bottom: 15px;
+      gap: 10px;
+      margin-top: 14px;
+      margin-bottom: 14px;
       text-align: left;
     }
 
     .teammate-card {
-      padding: 14px;
+      padding: 12px;
       border-radius: 12px;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--card-border);
     }
 
     .teammate-card.good {
       background-color: var(--good-bg);
-      border-color: #a7f3d0;
+      border-color: var(--good-border);
     }
 
     .teammate-card.bad {
       background-color: var(--bad-bg);
-      border-color: #fca5a5;
+      border-color: var(--bad-border);
     }
 
     .teammate-tag {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .teammate-card.good .teammate-tag {
-      color: var(--good-color);
-    }
-
-    .teammate-card.bad .teammate-tag {
-      color: var(--bad-color);
-    }
+    .teammate-card.good .teammate-tag { color: var(--good-color); }
+    .teammate-card.bad .teammate-tag { color: var(--bad-color); }
 
     .teammate-info {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 1.1rem;
+      gap: 6px;
+      font-size: 0.95rem;
       font-weight: 700;
+      color: var(--text-main);
     }
 
-    /* 診斷報告底部產品介紹樣式 */
+    /* 條碼與底欄 */
+    .id-card-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1.5px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .barcode-lines {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--text-sub);
+    }
+
     .result-product-intro {
       font-size: 0.8rem;
       color: var(--text-sub);
       text-align: left;
       line-height: 1.6;
-      margin-top: 25px;
-      margin-bottom: 15px;
-      padding: 0 5px;
+      margin-top: 18px;
+      margin-bottom: 14px;
+      padding: 14px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
     }
 
     .result-product-intro a {
-      color: var(--primary-color);
+      color: var(--primary-blue);
       text-decoration: underline;
-      font-weight: 500;
-    }
-
-    /* 診斷頁面產品介紹下的 Logo 樣式 */
-    .result-logo {
-      text-align: center;
-      margin-top: 15px;
-      margin-bottom: 10px;
+      font-weight: 700;
     }
 
     .result-logo img {
-      max-height: 32px;
+      max-height: 28px;
       width: auto;
       object-fit: contain;
     }
@@ -400,30 +622,32 @@
 
     .btn-action {
       flex: 1;
-      padding: 12px 16px;
-      border-radius: 10px;
+      padding: 13px 16px;
+      border-radius: 12px;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       cursor: pointer;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--card-border);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
       transition: all 0.2s ease;
-      background: #e5e7eb;
+      background: #ffffff;
       color: var(--text-main);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
 
     .btn-action:hover {
-      background: #d1d5db;
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
     }
 
-    /* 測驗頁面底部 Logo */
     .card-footer-logo {
-      margin-top: 15px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border-color);
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--card-border);
       text-align: center;
       display: flex;
       justify-content: center;
@@ -437,17 +661,8 @@
     }
 
     @media (max-width: 480px) {
-      .teammates-grid {
-        grid-template-columns: 1fr;
-      }
-      .result-actions {
-        flex-direction: column;
-      }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateX(10px); }
-      to { opacity: 1; transform: translateX(0); }
+      .teammates-grid { grid-template-columns: 1fr; }
+      .result-actions { flex-direction: column; }
     }
   </style>
 </head>
@@ -474,27 +689,27 @@
       <!-- Step 0: 封面頁 -->
       <div class="step-card active" data-step="0">
         <div style="text-align: center; padding: 0;">
-          <div style="font-size: 3.5rem; margin-bottom: 12px;">🐿️</div>
-          <h1 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin-bottom: 6px;">
+          <div style="font-size: 3.8rem; margin-bottom: 12px;">🐿️</div>
+          <h1 style="font-size: 1.55rem; font-weight: 900; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px;">
             【職場心理測驗】
           </h1>
-          <h2 style="font-size: 1.5rem; color: var(--primary-color); font-weight: 700; margin-bottom: 16px;">
+          <h2 style="font-size: 1.4rem; color: var(--text-main); font-weight: 700; margin-bottom: 18px;">
             解鎖你的職場代表動物！
           </h2>
           
-          <div style="font-size: 0.95rem; color: #000000; line-height: 1.8; margin-bottom: 18px;">
-            <p style="font-weight: 400;">鬧鐘響起的那刻，你的職場人格就已上線囉</p>
-            <p style="font-weight: 400;">從起床、打卡、工作一路到下班</p>
-            <p style="font-weight: 400;">看看工作日的你究竟是哪一派&amp; 工作心累真相！</p>
+          <div style="font-size: 0.95rem; color: var(--text-sub); line-height: 1.8; margin-bottom: 22px;">
+            <p style="font-weight: 500;">鬧鐘響起的那刻，你的職場人格就已上線囉！</p>
+            <p style="font-weight: 500;">從起床、打卡、工作一路到下班</p>
+            <p style="font-weight: 500;">看看工作日的你究竟是哪一派 & 領取你的專屬職場通行證！</p>
           </div>
           
-          <button type="button" class="btn-submit" id="btnStart">展開職場一日</button>
+          <button type="button" class="btn-submit" id="btnStart">展開職場一日 →</button>
         </div>
       </div>
 
       <!-- Q1 -->
       <div class="step-card" data-step="1">
-        <div class="q-title">Q1. 今天是週五，軟綿綿的床像是有磁力一樣…睜開眼，我的第一反應是？</div>
+        <div class="q-title">今天是週五，軟綿綿的床像是有磁力一樣…睜開眼，我的第一反應是？</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q1" value="2,3"><span>A. 不賴床，秒切上班「戰鬥模式」</span></label>
           <label class="option-label"><input type="radio" name="q1" value="6,1"><span>B. 先在床上進行10 分鐘的「人生意義探討」</span></label>
@@ -505,7 +720,7 @@
 
       <!-- Q2 -->
       <div class="step-card" data-step="2">
-        <div class="q-title">Q2. 08:59 AM 壓線抵達公司，我與打卡的距離是…</div>
+        <div class="q-title">08:59 AM 壓線抵達公司，我與打卡的距離是…</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q2" value="3,1"><span>A. 【極限衝刺】最後5 秒以滑壘姿態按下「打卡鐘」</span></label>
           <label class="option-label"><input type="radio" name="q2" value="2,0"><span>B. 【人海排隊】卡在門禁卡機前，數著前面還有幾位同事</span></label>
@@ -516,7 +731,7 @@
 
       <!-- Q3 -->
       <div class="step-card" data-step="3">
-        <div class="q-title">Q3. 09:30 AM邊收信件，邊喝續命咖啡，突然跳出一則訊息！</div>
+        <div class="q-title">09:30 AM邊收信件，邊喝續命咖啡，突然跳出一則訊息！</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q3" value="0,3"><span>A. 【民以食為天】公司APP推播：「午餐調查：極品滷肉飯」</span></label>
           <label class="option-label"><input type="radio" name="q3" value="1,1"><span>B. 【社牛揪團】LINE 群組訊息：「有人要一起叫外送嗎？」</span></label>
@@ -527,7 +742,7 @@
 
       <!-- Q4 -->
       <div class="step-card" data-step="4">
-        <div class="q-title">Q4. 14:00 PM 午休一結束，主管丟來一個爛攤子，你會…</div>
+        <div class="q-title">14:00 PM 午休一結束，主管丟來一個爛攤子，你會…</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q4" value="0,0"><span>A. 【假裝沒看到】先去帶薪拉屎，說不定事情晚點就自己解決</span></label>
           <label class="option-label"><input type="radio" name="q4" value="3,1"><span>B. 【人脈搜尋】轉頭向同事問：「那份2010年檔案你還有留嗎？」</span></label>
@@ -538,7 +753,7 @@
 
       <!-- Q5 -->
       <div class="step-card" data-step="5">
-        <div class="q-title">Q5. 16:30 PM 窗外狂風暴雨，因應梅雨季連日下雨，公司體恤員工通勤，開放明日居家上班</div>
+        <div class="q-title">16:30 PM 窗外狂風暴雨，因應梅雨季連日下雨，公司體恤員工通勤，開放明日居家上班</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q5" value="3,1"><span>A. 【張貼布告欄】上廁所路上，看到大家圍在布告欄七嘴八舌</span></label>
           <label class="option-label"><input type="radio" name="q5" value="2,1"><span>B. 【口耳相傳】隔壁同事興奮拍你肩膀：「聽說明天居家上班耶！」</span></label>
@@ -549,7 +764,7 @@
 
       <!-- Q6 -->
       <div class="step-card" data-step="6">
-        <div class="q-title">Q6. 17:55 PM總算是撐到這時候，我的下班儀式感是…</div>
+        <div class="q-title">17:55 PM總算是撐到這時候，我的下班儀式感是…</div>
         <div class="options">
           <label class="option-label"><input type="radio" name="q6" value="3,4"><span>A. 【時間追逐戰】今日事今日畢，抱著文件夾跑完所有簽核</span></label>
           <label class="option-label"><input type="radio" name="q6" value="3,2"><span>B. 【狂洗訊息】在 LINE 群組狂@主管：「再麻煩處理！」</span></label>
@@ -560,7 +775,7 @@
 
       <!-- Step 7: 個人資料 -->
       <div class="step-card" data-step="7">
-        <div class="q-title">🎉完成測驗！請填寫資料以取得診斷結果</div>
+        <div class="q-title" style="margin-bottom: 16px;">🎉 完成測驗！請填寫資料以核發職場通行證</div>
         <div class="user-info-group">
           <label for="userName">姓名 / 暱稱 *</label>
           <input type="text" id="userName" placeholder="請輸入您的姓名 / 暱稱">
@@ -570,7 +785,6 @@
           <input type="email" id="userEmail" placeholder="example@email.com">
         </div>
 
-        <!-- 個資同意條款樣式 -->
         <div class="privacy-consent-group">
           <input type="checkbox" id="privacyConsent">
           <label for="privacyConsent">
@@ -578,7 +792,7 @@
           </label>
         </div>
 
-        <button type="button" class="btn-submit" id="btnSubmit">解鎖我的職場代表動物</button>
+        <button type="button" class="btn-submit" id="btnSubmit">核發我的職場通行證 →</button>
       </div>
 
     </form>
@@ -587,64 +801,96 @@
       <button type="button" class="btn-back" id="btnBack">← 上一題</button>
     </div>
 
-    <!-- 僅在測驗進行時顯示的底部 Logo (加上 crossorigin 屬性) -->
     <div class="card-footer-logo">
       <img src="data:image/png;base64,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" alt="eSimplex Logo" crossorigin="anonymous">
     </div>
+
   </div>
 
-  <!-- 診斷報告頁面 -->
-  <div id="resultContainer" class="card result-card hidden">
+  <!-- 🪪 擬真識別證診斷報告頁面 -->
+  <div id="resultContainer" class="hidden">
+    
+    <div class="badge-wrapper">
+      <!-- 頂部織帶與金屬釦環 -->
+      <div class="lanyard-strap"></div>
+      <div class="lanyard-clip"></div>
+      <div class="badge-hole"></div>
 
-    <div style="font-size: 1rem; color: var(--text-sub); margin-bottom: 5px;">Hi, <span id="resName"></span>！你的職場診斷結果：</div>
-    <div class="animal-badge" id="resIcon">🦫</div>
-    <div class="result-title" id="resAnimal">職場代表動物</div>
-    <div class="os-box" id="resOS">職場OS：……</div>
+      <!-- 識別證卡片本體 -->
+      <div class="id-badge-card">
+        
+        <!-- 驗證圖章 -->
+        <div class="stamp-approved">VERIFIED</div>
 
-    <div class="score-box burnout">
-      <h3><span>🔥 工作內耗指數</span><span id="resBurnScore">0/21</span></h3>
-      <p id="resBurnDesc"></p>
-    </div>
-
-    <div class="score-box">
-      <h3><span>⚡ 工作效率指數</span><span id="resEffScore">0/21</span></h3>
-      <p id="resEffDesc"></p>
-    </div>
-
-    <div class="teammates-grid">
-      <div class="teammate-card good">
-        <div class="teammate-tag">🟢 工作神隊友</div>
-        <div class="teammate-info">
-          <span id="goodIcon">🦫</span>
-          <span id="goodName">鬆弛感水豚</span>
+        <!-- 發卡單位與晶片 -->
+        <div class="id-card-header">
+          <div class="id-card-issuer">
+            eSimplex
+            <span>Workplace Pass</span>
+          </div>
+          <div class="ic-chip"></div>
         </div>
-      </div>
-      <div class="teammate-card bad">
-        <div class="teammate-tag">🔴 職場雷隊友</div>
-        <div class="teammate-info">
-          <span id="badIcon">🐜</span>
-          <span id="badName">暴走螞蟻</span>
+
+        <!-- 識別證大頭照與主題名稱 -->
+        <div class="id-photo-frame" id="resIcon">🦫</div>
+        <div class="id-user-name"><span id="resName"></span> 的職場通行證</div>
+        <div class="id-animal-title" id="resAnimal">職場代表動物</div>
+        <div class="id-number" id="resIDNum">ID: #WORKAHOLIC8821</div>
+        <div class="os-box-badge" id="resOS">職場OS：……</div>
+
+        <!-- 內耗與效率分數 -->
+        <div class="score-box burnout">
+          <h3><span>🔥 工作內耗指數</span><span id="resBurnScore">0/21</span></h3>
+          <p id="resBurnDesc"></p>
         </div>
+
+        <div class="score-box">
+          <h3><span>⚡ 工作效率指數</span><span id="resEffScore">0/21</span></h3>
+          <p id="resEffDesc"></p>
+        </div>
+
+        <!-- 神/雷隊友 -->
+        <div class="teammates-grid">
+          <div class="teammate-card good">
+            <div class="teammate-tag">🟢 工作神隊友</div>
+            <div class="teammate-info">
+              <span id="goodIcon">🦫</span>
+              <span id="goodName">鬆弛感水豚</span>
+            </div>
+          </div>
+          <div class="teammate-card bad">
+            <div class="teammate-tag">🔴 職場雷隊友</div>
+            <div class="teammate-info">
+              <span id="badIcon">🐜</span>
+              <span id="badName">暴走螞蟻</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 產品介紹文字 -->
+        <p class="result-product-intro">
+          <a href="https://www.edetw.com/esimplex/?utm_source=esimplexsurvey&utm_medium=overthinking&utm_campaign=result" target="_blank">
+            e秒簽 (eSimplex)
+          </a>
+          是專為中小型企業設計的智慧管理工具，結合 BPM 電子表單流程管理、EIP 資訊入口、DMS 文件管理，提供簡約、友善、隨時隨地不受限的操作介面。涵蓋彈性簽核流程、客製化電子表單、文件管理、公告、問卷、行動打卡等實用功能，系統採高標準資安防護，全面減輕人力負擔、提升管理效益，不僅是許多企業主信賴管理工具，更是企業邁向數位轉型與高效率維運的最佳選擇。
+        </p>
+
+        <!-- 條碼與標誌底部 -->
+        <div class="id-card-footer">
+          <div class="barcode-lines">║▌│█║▌│║▌║▌█│</div>
+          <div class="result-logo">
+            <img src="data:image/png;base64,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" alt="eSimplex Logo" crossorigin="anonymous">
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- 產品介紹文字 -->
-    <p class="result-product-intro">
-      <a href="https://www.edetw.com/esimplex/?utm_source=esimplexsurvey&utm_medium=overthinking&utm_campaign=result" target="_blank">
-        e秒簽 (eSimplex)
-      </a>
-      是專為中小型企業設計的智慧管理工具，結合 BPM 電子表單流程管理、EIP 資訊入口、DMS 文件管理，提供簡約、友善、隨時隨地不受限的操作介面。涵蓋彈性簽核流程、客製化電子表單、文件管理、公告、問卷、行動打卡等實用功能，系統採高標準資安防護，全面減輕人力負擔、提升管理效益，不僅是許多企業主信賴管理工具，更是企業邁向數位轉型與高效率維運的最佳選擇。
-    </p>
-
-    <!-- 產品介紹下方的 Logo 圖 (加上 crossorigin 屬性) -->
-    <div class="result-logo">
-      <img src="data:image/png;base64,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" alt="eSimplex Logo" crossorigin="anonymous">
-    </div>
-
-    <!-- 底部按鈕組 -->
+    <!-- 底部功能按鈕 -->
     <div class="result-actions" id="resultActions">
-      <button type="button" class="btn-action" id="btnDownload">📸 下載報告圖片</button>
-      <button type="button" class="btn-action" onclick="location.reload()">🔄 重新測驗</button>
+      <button type="button" class="btn-action" id="btnDownload">📸 下載職場通行證</button>
+      <!-- 調整後的分享按鈕 -->
+      <button type="button" class="btn-action" id="btnShare" onclick="copyTestLink()">🔗 分享測驗連結</button>
     </div>
 
   </div>
@@ -658,15 +904,15 @@
   const TOTAL_QUESTIONS = 6;
 
   const BG_IMAGES = {
-    0: "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80')",
-    1: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80')",
-    2: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=1200&q=80')",
-    3: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80')",
-    4: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80')",
-    5: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=1200&q=80')",
-    6: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80')",
-    7: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80')",
-    result: "linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80')"
+    0: "linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80')",
+    1: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80')",
+    2: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=1200&q=80')",
+    3: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80')",
+    4: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80')",
+    5: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=1200&q=80')",
+    6: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80')",
+    7: "linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80')",
+    result: "linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80')"
   };
 
   const ANIMAL_MATRIX = {
@@ -682,7 +928,7 @@
   };
 
   // ==========================================
-  // 2. 狀態管理與 DOM 元素 (State & Elements)
+  // 2. DOM 元素與狀態 (State & Elements)
   // ==========================================
   let currentStep = 0;
 
@@ -701,7 +947,6 @@
     resultContainer: document.getElementById('resultContainer')
   };
 
-  // 動態新增「下一題」按鈕
   const btnNext = document.createElement('button');
   btnNext.type = 'button';
   btnNext.className = 'btn-back';
@@ -711,7 +956,7 @@
   DOM.navActions.appendChild(btnNext);
 
   // ==========================================
-  // 3. 核心邏輯函式 (Core Functions)
+  // 3. 核心邏輯 (Core Logic)
   // ==========================================
 
   function updateStep(step) {
@@ -743,6 +988,14 @@
 
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function generateIDNumber() {
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const date = String(now.getDate()).padStart(2, '0');
+
+    return `ID: #WORKAHOLIC${month}${date}`;
   }
 
   function calculateResult() {
@@ -791,8 +1044,49 @@
     };
   }
 
+  // 🔗 複製測驗連結邏輯
+  function copyTestLink() {
+    const currentUrl = window.location.href;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        alert('測驗連結已成功複製到剪貼簿！');
+      }).catch(err => {
+        fallbackCopyTextToClipboard(currentUrl);
+      });
+    } else {
+      fallbackCopyTextToClipboard(currentUrl);
+    }
+  }
+
+  // 備用複製邏輯 (向下相容)
+  function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        alert('測驗連結已成功複製到剪貼簿！');
+      } else {
+        alert('複製失敗，請手動複製網址：' + text);
+      }
+    } catch (err) {
+      alert('複製失敗，請手動複製網址：' + text);
+    }
+
+    document.body.removeChild(textArea);
+  }
+
   // ==========================================
-  // 4. 事件監聽 (Event Listeners)
+  // 4. 事件監聽與畫面切換
   // ==========================================
 
   updateStep(0);
@@ -847,6 +1141,7 @@
     document.getElementById('resName').textContent = name;
     document.getElementById('resIcon').textContent = resultData.animal.icon;
     document.getElementById('resAnimal').textContent = resultData.animal.name;
+    document.getElementById('resIDNum').textContent = generateIDNumber();
     document.getElementById('resOS').textContent = `職場OS：${resultData.animal.os}`;
 
     document.getElementById('resBurnScore').textContent = `${resultData.totalBurnout} / 21`;
@@ -867,52 +1162,48 @@
     DOM.resultContainer.classList.remove('hidden');
   });
 
-  // 🛠️ 下載報告截圖修復 (支援手機端長按儲存 & Cross-Origin 圖片截圖)
+  // 🛠️ 截圖下載功能 (手機/電腦雙支援)
   DOM.btnDownload.addEventListener('click', () => {
     const actionsDiv = document.getElementById('resultActions');
     actionsDiv.style.visibility = 'hidden';
 
-    // 檢查是否為行動裝置或 Safari
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     html2canvas(DOM.resultContainer, {
       scale: 2,
-      useCORS: true,            // 允許跨網域圖片截圖
-      allowTaint: false,        // 防止被圖片污染導致輸出空白
-      backgroundColor: '#ffffff'
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: null
     }).then(canvas => {
       actionsDiv.style.visibility = 'visible';
       const imgData = canvas.toDataURL('image/png');
 
       if (isMobile) {
-        // 手機端：用跳窗/新分頁開啟圖片，利於長按儲存
         const imgWindow = window.open('');
         if (imgWindow) {
           imgWindow.document.write(`
             <html>
               <head>
-                <title>職場心理測驗_診斷報告</title>
+                <title>職場通行證_診斷報告</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                  body { margin: 0; padding: 15px; background: #333; text-align: center; color: #fff; font-family: sans-serif; }
+                  body { margin: 0; padding: 20px; background: #0f172a; text-align: center; color: #fff; font-family: sans-serif; }
                   p { margin-bottom: 12px; font-size: 0.95rem; }
-                  img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+                  img { max-width: 100%; height: auto; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
                 </style>
               </head>
               <body>
-                <p>💡 請「長按下方圖片」選擇「儲存圖片」或「加入照片」</p>
-                <img src="${imgData}" alt="e秒簽職場人格診斷報告">
+                <p>💡 請「長按下方通行證」選擇「儲存圖片」或「加入照片」</p>
+                <img src="${imgData}" alt="e秒簽職場通行證">
               </body>
             </html>
           `);
         } else {
-          // 若被瀏覽器彈出視窗阻擋，則備用提示
           alert('請允許開啟彈出視窗以下載圖片，或將畫面截圖儲存。');
         }
       } else {
-        // 電腦端：直接觸發點擊下載檔案
         const link = document.createElement('a');
-        link.download = '職場心理測驗_診斷報告.png';
+        link.download = '職場通行證_診斷報告.png';
         link.href = imgData;
         document.body.appendChild(link);
         link.click();
