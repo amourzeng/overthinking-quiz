@@ -1160,37 +1160,119 @@
     DOM.resultContainer.classList.remove('hidden');
   });
 
-// 🛠️ 截圖下載功能 (Bug 1 靜態單色 + Bug 2 手機版 Modal 彈窗下載)
+// 🛠️ 截圖下載功能 (手機版美感排版 + 9:16 輸出)
   function prepareMobileExport(clonedDocument) {
     const result = clonedDocument.getElementById('resultContainer');
     const container = result.closest('.container');
-    const card = result.querySelector('.id-badge-card');
     const wrapper = result.querySelector('.badge-wrapper');
+    const card = result.querySelector('.id-badge-card');
 
     if (container) {
-      container.style.width = '880px';
-      container.style.maxWidth = '880px';
+      container.style.width = '440px';
+      container.style.maxWidth = '440px';
     }
-    result.style.width = '880px';
+
+    result.style.width = '440px';
     result.style.margin = '0';
     result.style.overflow = 'visible';
-    wrapper.style.width = '880px';
+    wrapper.style.width = '440px';
     wrapper.style.margin = '0';
-    wrapper.style.paddingTop = '38px';
-    card.style.width = '880px';
-    card.style.height = '1720px';
+    wrapper.style.paddingTop = '32px';
+
+    // 以 2 倍渲染：440 x 860 CSS px 會輸出為 880 x 1720 px
+    card.style.width = '440px';
+    card.style.height = '860px';
     card.style.boxSizing = 'border-box';
+    card.style.padding = '28px 22px 20px';
+    card.style.borderRadius = '24px';
     card.style.overflow = 'hidden';
+
+    const header = card.querySelector('.id-card-header');
+    const photo = card.querySelector('.id-photo-frame');
+    const scores = card.querySelectorAll('.score-box');
+    const teammates = card.querySelector('.teammates-grid');
+    const intro = card.querySelector('.result-product-intro');
+    if (header) header.style.marginBottom = '14px';
+    if (photo) {
+      photo.style.width = '100px';
+      photo.style.height = '100px';
+      photo.style.marginBottom = '10px';
+    }
+    scores.forEach(score => {
+      score.style.padding = '12px 14px';
+      score.style.marginBottom = '10px';
+    });
+    if (teammates) {
+      teammates.style.gap = '8px';
+      teammates.style.marginTop = '10px';
+      teammates.style.marginBottom = '10px';
+    }
+    if (intro) {
+      intro.style.marginTop = '14px';
+      intro.style.marginBottom = '10px';
+      intro.style.padding = '12px';
+      intro.style.fontSize = '0.78rem';
+    }
+
+    // 織帶縮短並降低視覺重量，讓識別證成為主角
+    const strap = result.querySelector('.lanyard-strap');
+    const clip = result.querySelector('.lanyard-clip');
+    const hole = result.querySelector('.badge-hole');
+    if (strap) {
+      strap.style.width = '34px';
+      strap.style.height = '38px';
+      strap.style.top = '-20px';
+    }
+    if (clip) {
+      clip.style.width = '24px';
+      clip.style.height = '14px';
+      clip.style.top = '8px';
+    }
+    if (hole) {
+      hole.style.width = '34px';
+      hole.style.height = '8px';
+      hole.style.top = '8px';
+    }
   }
 
   function createMobileExportCanvas() {
     return html2canvas(DOM.resultContainer, {
-      scale: 1,
+      scale: 2,
       useCORS: true,
       allowTaint: false,
       backgroundColor: null,
       onclone: prepareMobileExport
     });
+  }
+
+  function createStyledPortraitCanvas(sourceCanvas) {
+    const portraitCanvas = document.createElement('canvas');
+    const targetWidth = 1080;
+    const targetHeight = 1920;
+    portraitCanvas.width = targetWidth;
+    portraitCanvas.height = targetHeight;
+    const context = portraitCanvas.getContext('2d');
+
+    const background = context.createLinearGradient(0, 0, 0, targetHeight);
+    background.addColorStop(0, '#0b1224');
+    background.addColorStop(0.5, '#111b35');
+    background.addColorStop(1, '#080e1d');
+    context.fillStyle = background;
+    context.fillRect(0, 0, targetWidth, targetHeight);
+
+    const glow = context.createRadialGradient(540, 960, 80, 540, 960, 760);
+    glow.addColorStop(0, 'rgba(124, 58, 237, 0.16)');
+    glow.addColorStop(0.55, 'rgba(37, 99, 235, 0.06)');
+    glow.addColorStop(1, 'rgba(15, 23, 42, 0)');
+    context.fillStyle = glow;
+    context.fillRect(0, 0, targetWidth, targetHeight);
+
+    // 880 x 1720 白色識別證，置中於 1080 x 1920 畫布
+    const cardX = 100;
+    const cardY = 100;
+    const cardTopInCapture = 64; // wrapper paddingTop 32px x scale 2
+    context.drawImage(sourceCanvas, cardX, cardY - cardTopInCapture);
+    return portraitCanvas;
   }
 
   DOM.btnDownload.addEventListener('click', () => {
@@ -1200,7 +1282,7 @@
     // 1. 隱藏操作按鈕區塊
     actionsDiv.style.visibility = 'hidden';
 
-    // 2. 手機版重新排版成 880 x 1720 的白色識別證；電腦版維持原本截圖
+    // 2. 手機版重新排版；電腦版維持原本截圖
     const capturePromise = isMobile
       ? createMobileExportCanvas()
       : html2canvas(DOM.resultContainer, {
@@ -1211,32 +1293,12 @@
         });
 
     capturePromise.then(canvas => {
-      // 還原按鈕顯示
       actionsDiv.style.visibility = 'visible';
-
-      let exportCanvas = canvas;
-      if (isMobile) {
-        const portraitCanvas = document.createElement('canvas');
-        const targetWidth = 1080;
-        const targetHeight = 1920;
-        portraitCanvas.width = targetWidth;
-        portraitCanvas.height = targetHeight;
-        const context = portraitCanvas.getContext('2d');
-        context.fillStyle = '#0f172a';
-        context.fillRect(0, 0, targetWidth, targetHeight);
-
-        // 白色卡片 880 x 1720，置中於 1080 x 1920 的 9:16 畫布
-        const cardX = 100;
-        const cardY = 100;
-        const cardTopInCapture = 38;
-        context.drawImage(canvas, cardX, cardY - cardTopInCapture);
-        exportCanvas = portraitCanvas;
-      }
-
+      const exportCanvas = isMobile ? createStyledPortraitCanvas(canvas) : canvas;
       const imgData = exportCanvas.toDataURL('image/png');
 
       if (isMobile) {
-        // 📱 手機版：開浮層 Modal 讓使用者長按儲存 (解決 window.open 被瀏覽器攔截問題)
+        // 📱 手機版：開浮層 Modal 讓使用者長按儲存
         showMobileImagePreview(imgData);
       } else {
         // 💻 電腦版：直接下載檔案
