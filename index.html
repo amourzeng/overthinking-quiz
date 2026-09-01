@@ -1172,9 +1172,12 @@
     context.fillStyle = '#0f172a';
     context.fillRect(0, 0, targetWidth, targetHeight);
 
+    // 保留適度安全邊界，同時讓識別證比上一版更寬
+    const safeWidth = targetWidth * 0.9;
+    const safeHeight = targetHeight * 0.9;
     const scale = Math.min(
-      targetWidth / sourceCanvas.width,
-      targetHeight / sourceCanvas.height
+      safeWidth / sourceCanvas.width,
+      safeHeight / sourceCanvas.height
     );
     const drawWidth = sourceCanvas.width * scale;
     const drawHeight = sourceCanvas.height * scale;
@@ -1202,7 +1205,7 @@
       // 還原按鈕顯示
       actionsDiv.style.visibility = 'visible';
 
-      // 手機版輸出固定為 1080 x 1920，也就是 9:16
+      // 手機版輸出固定為 1080 x 1920，也就是 9:16，並保留安全邊界
       const exportCanvas = isMobile ? createPortraitCanvas(canvas) : canvas;
       const imgData = exportCanvas.toDataURL('image/png');
 
