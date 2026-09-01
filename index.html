@@ -1161,31 +1161,36 @@
   });
 
 // 🛠️ 截圖下載功能 (Bug 1 靜態單色 + Bug 2 手機版 Modal 彈窗下載)
-  function createPortraitCanvas(sourceCanvas) {
-    const portraitCanvas = document.createElement('canvas');
-    const targetWidth = 1080;
-    const targetHeight = 1920;
-    portraitCanvas.width = targetWidth;
-    portraitCanvas.height = targetHeight;
+  function prepareMobileExport(clonedDocument) {
+    const result = clonedDocument.getElementById('resultContainer');
+    const container = result.closest('.container');
+    const card = result.querySelector('.id-badge-card');
+    const wrapper = result.querySelector('.badge-wrapper');
 
-    const context = portraitCanvas.getContext('2d');
-    context.fillStyle = '#0f172a';
-    context.fillRect(0, 0, targetWidth, targetHeight);
+    if (container) {
+      container.style.width = '880px';
+      container.style.maxWidth = '880px';
+    }
+    result.style.width = '880px';
+    result.style.margin = '0';
+    result.style.overflow = 'visible';
+    wrapper.style.width = '880px';
+    wrapper.style.margin = '0';
+    wrapper.style.paddingTop = '38px';
+    card.style.width = '880px';
+    card.style.height = '1720px';
+    card.style.boxSizing = 'border-box';
+    card.style.overflow = 'hidden';
+  }
 
-    // 保留適度安全邊界，同時讓識別證比上一版更寬
-    const safeWidth = targetWidth * 0.9;
-    const safeHeight = targetHeight * 0.9;
-    const scale = Math.min(
-      safeWidth / sourceCanvas.width,
-      safeHeight / sourceCanvas.height
-    );
-    const drawWidth = sourceCanvas.width * scale;
-    const drawHeight = sourceCanvas.height * scale;
-    const offsetX = (targetWidth - drawWidth) / 2;
-    const offsetY = (targetHeight - drawHeight) / 2;
-
-    context.drawImage(sourceCanvas, offsetX, offsetY, drawWidth, drawHeight);
-    return portraitCanvas;
+  function createMobileExportCanvas() {
+    return html2canvas(DOM.resultContainer, {
+      scale: 1,
+      useCORS: true,
+      allowTaint: false,
+      backgroundColor: null,
+      onclone: prepareMobileExport
+    });
   }
 
   DOM.btnDownload.addEventListener('click', () => {
@@ -1195,18 +1200,39 @@
     // 1. 隱藏操作按鈕區塊
     actionsDiv.style.visibility = 'hidden';
 
-    // 2. 執行截圖
-    html2canvas(DOM.resultContainer, {
-      scale: 2,           // 高畫質渲染
-      useCORS: true,      // 支援跨域與 Base64 圖片
-      allowTaint: false,
-      backgroundColor: null
-    }).then(canvas => {
+    // 2. 手機版重新排版成 880 x 1720 的白色識別證；電腦版維持原本截圖
+    const capturePromise = isMobile
+      ? createMobileExportCanvas()
+      : html2canvas(DOM.resultContainer, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: null
+        });
+
+    capturePromise.then(canvas => {
       // 還原按鈕顯示
       actionsDiv.style.visibility = 'visible';
 
-      // 手機版輸出固定為 1080 x 1920，也就是 9:16，並保留安全邊界
-      const exportCanvas = isMobile ? createPortraitCanvas(canvas) : canvas;
+      let exportCanvas = canvas;
+      if (isMobile) {
+        const portraitCanvas = document.createElement('canvas');
+        const targetWidth = 1080;
+        const targetHeight = 1920;
+        portraitCanvas.width = targetWidth;
+        portraitCanvas.height = targetHeight;
+        const context = portraitCanvas.getContext('2d');
+        context.fillStyle = '#0f172a';
+        context.fillRect(0, 0, targetWidth, targetHeight);
+
+        // 白色卡片 880 x 1720，置中於 1080 x 1920 的 9:16 畫布
+        const cardX = 100;
+        const cardY = 100;
+        const cardTopInCapture = 38;
+        context.drawImage(canvas, cardX, cardY - cardTopInCapture);
+        exportCanvas = portraitCanvas;
+      }
+
       const imgData = exportCanvas.toDataURL('image/png');
 
       if (isMobile) {
